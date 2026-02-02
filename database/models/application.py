@@ -1,0 +1,74 @@
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Index, DateTime, Enum, Date, Text
+from sqlalchemy.orm import relationship, validates
+from .base import Base
+from .enums.application_status import ApplicationStatusEnum, GenderEnum
+import re
+
+
+
+class Application(Base):
+    __tablename__ = "application"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("user.id"))
+    user = relationship("User", back_populates="applications") #relation with user
+
+    #Status
+    status = Column(Enum(ApplicationStatusEnum), nullable=False, index=True)
+
+    #Personal Information
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    birth_date = Column(Date, nullable=False)
+    gender = Column(Enum(GenderEnum), nullable=False)
+
+
+    #Contact Info
+    address = Column(String, nullable=False)
+    phone_number = Column(String, nullable=False)
+    email = Column(String, nullable=True)
+
+
+    #Education skills and status
+    is_student = Column(Boolean, default=False)
+    education_place = Column(String, nullable=True)
+    education_level = Column(String, nullable=True)
+
+    #Language skills
+    russian_level = Column(String, nullable=True)
+    russian_voice_path = Column(String, nullable=True)
+
+    english_level = Column(String, nullable=True)
+    english_voice_path = Column(String, nullable=True)
+
+    #Work and Experience
+    has_work_experience = Column(Boolean, default=False)
+    work_experience_lenght = Column(String, nullable=True)
+    work_experience_description = Column(String, nullable=True)
+    last_workplace = Column(String, nullable=True)
+    last_position = Column(String, nullable=True)
+
+    #Documents
+    photo_path = Column(String, nullable=True)
+    resume_path = Column(String, nullable=True)
+
+    #Additional info
+    how_found_us = Column(String, nullable=True)
+    additional_notes = Column(String, nullable=True)
+
+
+    hr_notes = Column(Text, nullable=True)
+
+    # Indexes
+    __table_args__ = (
+        Index("ix_applications_status_created", "status", "created_at"),
+        Index("ix_applications_user_status", "user_id", "status"),
+    )
+
+    @validates("phone_number")
+    def validate_phone(self, key, phone):
+        # Basic phone validation for Uzbekistan
+        cleaned = re.sub(r"[^\d+]", "", phone)
+        if not re.match(r"^\+?998\d{9}$", cleaned):
+            raise ValueError("Invalid Uzbekistan phone number")
+        return cleaned
