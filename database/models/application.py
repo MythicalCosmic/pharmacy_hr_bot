@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Index, DateTime, Enum, Date, Text
 from sqlalchemy.orm import relationship, validates
 from .base import Base
-from .enums.application_status import ApplicationStatusEnum, GenderEnum
+from .enums.application_status import ApplicationStatusEnum, GenderEnum, LevelEnum
 import re
 
 
@@ -34,12 +34,21 @@ class Application(Base):
     education_place = Column(String, nullable=True)
     education_level = Column(String, nullable=True)
 
-    #Language skills
-    russian_level = Column(String, nullable=True)
-    russian_voice_path = Column(String, nullable=True)
+    #Additional education
+    additional_courses = Column(String, nullable=True)
+    additional_course_subject = Column(String, nullable=True)
 
-    english_level = Column(String, nullable=True)
-    english_voice_path = Column(String, nullable=True)
+
+    #maritial status
+    marriage_status = Column(String, nullable=True, index=True)
+    if_children = Column(String, nullable=True, index=True)
+
+    #Language skills
+    russian_level = Column(Enum(LevelEnum), nullable=True)
+    russian_voice_path = Column(String(255), nullable=True)
+
+    english_level = Column(Enum(LevelEnum), nullable=True)
+    english_voice_path = Column(String(255), nullable=True)
 
     #Work and Experience
     has_work_experience = Column(Boolean, default=False)
@@ -47,6 +56,10 @@ class Application(Base):
     work_experience_description = Column(String, nullable=True)
     last_workplace = Column(String, nullable=True)
     last_position = Column(String, nullable=True)
+    how_long_work = Column(String)
+    why_work_with_us = Column(String)
+    ever_recenptionist = Column(String)
+    expected_salary = Column(String)
 
     #Documents
     photo_path = Column(String, nullable=True)

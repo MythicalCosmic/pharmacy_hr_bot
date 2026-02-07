@@ -15,3 +15,12 @@ class ApplicationStatusEnum(enum.Enum):
     ACCEPTED = "accepted"
     REJECTED = "rejected"
     WITHDRAWN = "withdrawn"
+
+class LevelEnum(str, enum.Enum):
+    none = "none"
+    beginner = "beginner"
+    elementary = "elementary"
+    intermediate = "intermediate"
+    upper_intermediate = "upper_intermediate"
+    advanced = "advanced"
+    native = "native"
