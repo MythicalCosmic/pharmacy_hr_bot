@@ -58,7 +58,7 @@ async def process_experience_years(message: Message, state: FSMContext, user_lan
             return
         
         app_id = await get_app_id(state)
-        await DB.app.update(app_id, work_experience_length=years)
+        await DB.app.update(app_id, work_experience_lenght=years)
         await state.update_data(experience_years=years)
         await message.answer(t(lang, "application.last_workplace.ask"), reply_markup=Keyboards.back(lang))
         await state.set_state(ApplicationState.last_workplace)

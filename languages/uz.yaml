@@ -1,7 +1,235 @@
 welcome:
-  first_time: "Xush kelibsiz! Iltimos, tilni tanlang:"
-  returning: "Xush kelibsiz, {name}!"
+  first_time: |
+    🎉 Xush kelibsiz!
+    
+    Bu Pharmacy HR Bot - ish topish uchun ariza topshirish tizimi.
+    
+    Iltimos, tilni tanlang:
+  returning: "👋 Qaytganingizdan xursandmiz, {name}!"
+
+buttons:
+  uz: "🇺🇿 O'zbekcha"
+  ru: "🇷🇺 Русский"
+  en: "🇬🇧 English"
+  start_application: "📝 Ariza topshirish"
+  settings: "⚙️ Sozlamalar"
+  back: "⬅️ Orqaga"
+  skip: "⏭ O'tkazib yuborish"
+  confirm: "✅ Tasdiqlash"
+  cancel: "❌ Bekor qilish"
+  refill: "🔄 Qayta to'ldirish"
+  male: "👨 Erkak"
+  female: "👩 Ayol"
+  yes: "✅ Ha"
+  no: "❌ Yo'q"
+  send_phone: "📱 Telefon raqamni yuborish"
+  beginner: "🟢 Boshlang'ich"
+  elementary: "🟡 Elementary"
+  intermediate: "🟠 O'rta"
+  upper_intermediate: "🔵 Yuqori o'rta"
+  advanced: "🟣 Yuqori"
+  native: "⭐ Ona tili"
+
 menu:
-  main: "Asosiy menyu"
+  main: |
+    📋 Asosiy menyu
+    
+    Quyidagi tugmalardan birini tanlang:
+  settings: |
+    ⚙️ Sozlamalar
+    
+    Tilni o'zgartirish uchun quyidagi tugmalardan birini tanlang:
+  language_changed: "✅ Til muvaffaqiyatli o'zgartirildi!"
+
+application:
+  start: |
+    📝 Ariza topshirish
+    
+    Iltimos, quyidagi ma'lumotlarni kiriting.
+    Barcha maydonlarni to'g'ri to'ldiring.
+  
+  first_name:
+    ask: "👤 Ismingizni kiriting (2-50 belgi):"
+    invalid: "❌ Ism 2-50 belgi oralig'ida bo'lishi kerak. Qaytadan kiriting:"
+  
+  last_name:
+    ask: "👤 Familiyangizni kiriting (2-50 belgi):"
+    invalid: "❌ Familiya 2-50 belgi oralig'ida bo'lishi kerak. Qaytadan kiriting:"
+  
+  birth_date:
+    ask: |
+      📅 Tug'ilgan sanangizni kiriting
+      
+      Format: KK.OO.YYYY
+      Misol: 15.06.1995
+    invalid: |
+      ❌ Noto'g'ri format!
+      
+      Format: KK.OO.YYYY
+      Misol: 15.06.1995
+      
+      Qaytadan kiriting:
+  
+  gender:
+    ask: "👫 Jinsingizni tanlang:"
+  
+  address:
+    ask: "🏠 Manzilingizni kiriting (5-255 belgi):"
+    invalid: "❌ Manzil 5-255 belgi oralig'ida bo'lishi kerak. Qaytadan kiriting:"
+  
+  phone:
+    ask: |
+      📱 Telefon raqamingizni kiriting
+      
+      Format: +998XXXXXXXXX
+      Misol: +998901234567
+      
+      Yoki tugmani bosing:
+    invalid: |
+      ❌ Noto'g'ri format!
+      
+      Format: +998XXXXXXXXX
+      Misol: +998901234567
+      
+      Qaytadan kiriting:
+  
+  email:
+    ask: |
+      📧 Email manzilingizni kiriting
+      
+      Misol: example@gmail.com
+      
+      Yoki o'tkazib yuboring:
+    invalid: "❌ Noto'g'ri email format! Qaytadan kiriting yoki o'tkazib yuboring:"
+  
+  is_student:
+    ask: "🎓 Hozirda talabamisiz?"
+  
+  education_place:
+    ask: "🏫 Ta'lim muassasasi nomini kiriting:"
+    invalid: "❌ Ta'lim muassasasi nomi 2-255 belgi oralig'ida bo'lishi kerak:"
+  
+  education_level:
+    ask: "📚 Ta'lim darajangizni tanlang:"
+  
+  russian_level:
+    ask: "🇷🇺 Rus tili darajangizni tanlang:"
+  
+  russian_voice:
+    ask: |
+      🎤 Rus tilida ovozli xabar yuboring
+      
+      O'zingiz haqingizda qisqacha gapiring (30 soniya - 2 daqiqa)
+    invalid: "❌ Iltimos, ovozli xabar yuboring:"
+  
+  english_level:
+    ask: "🇬🇧 Ingliz tili darajangizni tanlang:"
+  
+  english_voice:
+    ask: |
+      🎤 Ingliz tilida ovozli xabar yuboring
+      
+      O'zingiz haqingizda qisqacha gapiring (30 soniya - 2 daqiqa)
+    invalid: "❌ Iltimos, ovozli xabar yuboring:"
+  
+  has_experience:
+    ask: "💼 Ish tajribangiz bormi?"
+  
+  experience_years:
+    ask: "📆 Necha yillik ish tajribangiz bor? (raqam kiriting):"
+    invalid: "❌ Iltimos, faqat raqam kiriting (0-50):"
+  
+  last_workplace:
+    ask: "🏢 Oxirgi ish joyingiz nomini kiriting:"
+    invalid: "❌ Ish joyi nomi 2-255 belgi oralig'ida bo'lishi kerak:"
+  
+  last_position:
+    ask: "👔 Oxirgi lavoziminzini kiriting:"
+    invalid: "❌ Lavozim nomi 2-100 belgi oralig'ida bo'lishi kerak:"
+  
+  photo:
+    ask: |
+      📸 Rasmingizni yuboring
+      
+      Iltimos, yuzingiz aniq ko'rinadigan rasm yuboring.
+    invalid: "❌ Iltimos, rasm yuboring:"
+  
+  resume:
+    ask: |
+      📄 Rezyume faylini yuboring (PDF yoki Word)
+      
+      Yoki o'tkazib yuboring:
+    invalid: "❌ Iltimos, PDF yoki Word fayl yuboring yoki o'tkazib yuboring:"
+  
+  how_found:
+    ask: |
+      🔍 Biz haqimizda qayerdan bildingiz?
+      
+      Misol: Instagram, do'stim orqali, reklama
+    invalid: "❌ Iltimos, 2-255 belgi oralig'ida javob yozing:"
+  
+  additional_notes:
+    ask: |
+      📝 Qo'shimcha ma'lumotlar
+      
+      O'zingiz haqingizda qo'shimcha ma'lumot yozishingiz mumkin.
+      Yoki o'tkazib yuboring:
+
+  confirmation:
+    header: |
+      📋 Arizangizni tekshiring:
+      
+      ━━━━━━━━━━━━━━━━━━━━━
+    personal: |
+      👤 Shaxsiy ma'lumotlar:
+      • Ism: {first_name}
+      • Familiya: {last_name}
+      • Tug'ilgan sana: {birth_date}
+      • Jinsi: {gender}
+    contact: |
+      📞 Aloqa ma'lumotlari:
+      • Manzil: {address}
+      • Telefon: {phone}
+      • Email: {email}
+    education: |
+      🎓 Ta'lim:
+      • Talaba: {is_student}
+      • Ta'lim joyi: {education_place}
+      • Daraja: {education_level}
+    languages: |
+      🌐 Tillar:
+      • Rus tili: {russian_level}
+      • Ingliz tili: {english_level}
+    experience: |
+      💼 Ish tajribasi:
+      • Tajriba: {has_experience}
+      • Yillar: {years}
+      • Oxirgi ish joyi: {workplace}
+      • Lavozim: {position}
+    additional: |
+      📝 Qo'shimcha:
+      • Qayerdan topdingiz: {how_found}
+      • Izoh: {notes}
+    footer: |
+      ━━━━━━━━━━━━━━━━━━━━━
+      
+      ✅ Tasdiqlash uchun tugmani bosing
+      🔄 Qayta to'ldirish uchun tugmani bosing
+    
+    ask: "Arizangizni tasdiqlaysizmi?"
+  
+  success: |
+    ✅ Arizangiz muvaffaqiyatli yuborildi!
+    
+    Tez orada siz bilan bog'lanamiz.
+    
+    Rahmat! 🙏
+  
+  cancelled: |
+    ❌ Ariza bekor qilindi.
+    
+    Qayta topshirish uchun "Ariza topshirish" tugmasini bosing.
+
 errors:
-  general: "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring."
+  general: "❌ Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring."
+  throttled: "⏳ Iltimos, sekinroq yozing!"

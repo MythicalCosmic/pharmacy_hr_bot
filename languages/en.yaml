@@ -1,7 +1,235 @@
 welcome:
-  first_time: "Welcome! Please select your language:"
-  returning: "Welcome back, {name}!"
+  first_time: |
+    🎉 Welcome!
+    
+    This is Pharmacy HR Bot - job application system.
+    
+    Please select your language:
+  returning: "👋 Welcome back, {name}!"
+
+buttons:
+  uz: "🇺🇿 O'zbekcha"
+  ru: "🇷🇺 Русский"
+  en: "🇬🇧 English"
+  start_application: "📝 Start Application"
+  settings: "⚙️ Settings"
+  back: "⬅️ Back"
+  skip: "⏭ Skip"
+  confirm: "✅ Confirm"
+  cancel: "❌ Cancel"
+  refill: "🔄 Refill"
+  male: "👨 Male"
+  female: "👩 Female"
+  yes: "✅ Yes"
+  no: "❌ No"
+  send_phone: "📱 Send Phone Number"
+  beginner: "🟢 Beginner"
+  elementary: "🟡 Elementary"
+  intermediate: "🟠 Intermediate"
+  upper_intermediate: "🔵 Upper Intermediate"
+  advanced: "🟣 Advanced"
+  native: "⭐ Native"
+
 menu:
-  main: "Main menu"
+  main: |
+    📋 Main Menu
+    
+    Select one of the buttons below:
+  settings: |
+    ⚙️ Settings
+    
+    Select a language:
+  language_changed: "✅ Language changed successfully!"
+
+application:
+  start: |
+    📝 Job Application
+    
+    Please fill in the following information.
+    Complete all fields correctly.
+  
+  first_name:
+    ask: "👤 Enter your first name (2-50 characters):"
+    invalid: "❌ First name must be 2-50 characters. Try again:"
+  
+  last_name:
+    ask: "👤 Enter your last name (2-50 characters):"
+    invalid: "❌ Last name must be 2-50 characters. Try again:"
+  
+  birth_date:
+    ask: |
+      📅 Enter your date of birth
+      
+      Format: DD.MM.YYYY
+      Example: 15.06.1995
+    invalid: |
+      ❌ Invalid format!
+      
+      Format: DD.MM.YYYY
+      Example: 15.06.1995
+      
+      Try again:
+  
+  gender:
+    ask: "👫 Select your gender:"
+  
+  address:
+    ask: "🏠 Enter your address (5-255 characters):"
+    invalid: "❌ Address must be 5-255 characters. Try again:"
+  
+  phone:
+    ask: |
+      📱 Enter your phone number
+      
+      Format: +998XXXXXXXXX
+      Example: +998901234567
+      
+      Or press the button:
+    invalid: |
+      ❌ Invalid format!
+      
+      Format: +998XXXXXXXXX
+      Example: +998901234567
+      
+      Try again:
+  
+  email:
+    ask: |
+      📧 Enter your email address
+      
+      Example: example@gmail.com
+      
+      Or skip:
+    invalid: "❌ Invalid email format! Try again or skip:"
+  
+  is_student:
+    ask: "🎓 Are you currently a student?"
+  
+  education_place:
+    ask: "🏫 Enter your educational institution name:"
+    invalid: "❌ Name must be 2-255 characters:"
+  
+  education_level:
+    ask: "📚 Select your education level:"
+  
+  russian_level:
+    ask: "🇷🇺 Select your Russian language level:"
+  
+  russian_voice:
+    ask: |
+      🎤 Send a voice message in Russian
+      
+      Tell about yourself briefly (30 sec - 2 min)
+    invalid: "❌ Please send a voice message:"
+  
+  english_level:
+    ask: "🇬🇧 Select your English language level:"
+  
+  english_voice:
+    ask: |
+      🎤 Send a voice message in English
+      
+      Tell about yourself briefly (30 sec - 2 min)
+    invalid: "❌ Please send a voice message:"
+  
+  has_experience:
+    ask: "💼 Do you have work experience?"
+  
+  experience_years:
+    ask: "📆 How many years of experience? (enter a number):"
+    invalid: "❌ Please enter only a number (0-50):"
+  
+  last_workplace:
+    ask: "🏢 Enter your last workplace name:"
+    invalid: "❌ Name must be 2-255 characters:"
+  
+  last_position:
+    ask: "👔 Enter your last position:"
+    invalid: "❌ Position must be 2-100 characters:"
+  
+  photo:
+    ask: |
+      📸 Send your photo
+      
+      Please send a photo where your face is clearly visible.
+    invalid: "❌ Please send a photo:"
+  
+  resume:
+    ask: |
+      📄 Send your resume file (PDF or Word)
+      
+      Or skip:
+    invalid: "❌ Please send a PDF or Word file or skip:"
+  
+  how_found:
+    ask: |
+      🔍 How did you find out about us?
+      
+      Example: Instagram, friend, advertisement
+    invalid: "❌ Please write an answer of 2-255 characters:"
+  
+  additional_notes:
+    ask: |
+      📝 Additional Information
+      
+      You can write additional information about yourself.
+      Or skip:
+
+  confirmation:
+    header: |
+      📋 Review your application:
+      
+      ━━━━━━━━━━━━━━━━━━━━━
+    personal: |
+      👤 Personal Information:
+      • First Name: {first_name}
+      • Last Name: {last_name}
+      • Date of Birth: {birth_date}
+      • Gender: {gender}
+    contact: |
+      📞 Contact Information:
+      • Address: {address}
+      • Phone: {phone}
+      • Email: {email}
+    education: |
+      🎓 Education:
+      • Student: {is_student}
+      • Institution: {education_place}
+      • Level: {education_level}
+    languages: |
+      🌐 Languages:
+      • Russian: {russian_level}
+      • English: {english_level}
+    experience: |
+      💼 Work Experience:
+      • Experience: {has_experience}
+      • Years: {years}
+      • Last Workplace: {workplace}
+      • Position: {position}
+    additional: |
+      📝 Additional:
+      • How found: {how_found}
+      • Notes: {notes}
+    footer: |
+      ━━━━━━━━━━━━━━━━━━━━━
+      
+      ✅ Press to confirm
+      🔄 Press to refill
+    
+    ask: "Do you confirm your application?"
+  
+  success: |
+    ✅ Your application has been successfully submitted!
+    
+    We will contact you soon.
+    
+    Thank you! 🙏
+  
+  cancelled: |
+    ❌ Application cancelled.
+    
+    Press "Start Application" to submit again.
+
 errors:
-  general: "An error occurred. Please try again."
+  general: "❌ An error occurred. Please try again."
+  throttled: "⏳ Please slow down!"

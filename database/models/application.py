@@ -56,10 +56,10 @@ class Application(Base):
     work_experience_description = Column(String, nullable=True)
     last_workplace = Column(String, nullable=True)
     last_position = Column(String, nullable=True)
-    how_long_work = Column(String)
-    why_work_with_us = Column(String)
-    ever_recenptionist = Column(String)
-    expected_salary = Column(String)
+    # how_long_work = Column(String)
+    # why_work_with_us = Column(String)
+    # ever_recenptionist = Column(String)
+    # expected_salary = Column(String)
 
     #Documents
     photo_path = Column(String, nullable=True)
