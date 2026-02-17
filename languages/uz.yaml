@@ -1,0 +1,7 @@
+welcome:
+  first_time: "Xush kelibsiz! Iltimos, tilni tanlang:"
+  returning: "Xush kelibsiz, {name}!"
+menu:
+  main: "Asosiy menyu"
+errors:
+  general: "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring."

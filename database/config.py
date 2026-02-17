@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 from typing import AsyncGenerator
 import os
 
+
 # Database URL - defaults to SQLite for development
 # For PostgreSQL: postgresql+asyncpg://user:pass@localhost:5432/dbname
 DATABASE_URL = os.getenv(

@@ -3,18 +3,18 @@ import enum
 
 
 class GenderEnum(enum.Enum):
-    MALE = "male"
-    FEMALE = "female"
+    male = "male"
+    female = "female"
 
 
 class ApplicationStatusEnum(enum.Enum):
-    DRAFT = "draft"
-    PENDING = "pending"
-    UNDER_REVIEW = "under_review"
-    INTERVIEW_SCHEDULED = "interview_scheduled"
-    ACCEPTED = "accepted"
-    REJECTED = "rejected"
-    WITHDRAWN = "withdrawn"
+    draft = "draft"
+    pending = "pending"
+    under_review = "under_review"
+    interview_scheduled = "interview_scheduled"
+    accepted = "accepted"
+    rejected = "rejected"
+    withdrawn = "withdrawn"
 
 class LevelEnum(str, enum.Enum):
     none = "none"

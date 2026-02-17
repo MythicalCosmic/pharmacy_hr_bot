@@ -17,20 +17,20 @@ class Application(Base):
     status = Column(Enum(ApplicationStatusEnum), nullable=False, index=True)
 
     #Personal Information
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
-    birth_date = Column(Date, nullable=False)
-    gender = Column(Enum(GenderEnum), nullable=False)
+    first_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=True)
+    birth_date = Column(Date, nullable=True)
+    gender = Column(Enum(GenderEnum), nullable=True)
 
 
     #Contact Info
-    address = Column(String, nullable=False)
-    phone_number = Column(String, nullable=False)
+    address = Column(String, nullable=True)
+    phone_number = Column(String, nullable=True)
     email = Column(String, nullable=True)
 
 
     #Education skills and status
-    is_student = Column(Boolean, default=False)
+    is_student = Column(Boolean, default=True)
     education_place = Column(String, nullable=True)
     education_level = Column(String, nullable=True)
 
@@ -51,7 +51,7 @@ class Application(Base):
     english_voice_path = Column(String(255), nullable=True)
 
     #Work and Experience
-    has_work_experience = Column(Boolean, default=False)
+    has_work_experience = Column(Boolean, default=False, nullable=True)
     work_experience_lenght = Column(String, nullable=True)
     work_experience_description = Column(String, nullable=True)
     last_workplace = Column(String, nullable=True)
@@ -68,6 +68,7 @@ class Application(Base):
     #Additional info
     how_found_us = Column(String, nullable=True)
     additional_notes = Column(String, nullable=True)
+    
 
 
     hr_notes = Column(Text, nullable=True)

@@ -1,0 +1,7 @@
+welcome:
+  first_time: "Welcome! Please select your language:"
+  returning: "Welcome back, {name}!"
+menu:
+  main: "Main menu"
+errors:
+  general: "An error occurred. Please try again."

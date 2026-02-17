@@ -14,9 +14,9 @@ class User(Base):
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=True)
     username = Column(String, unique=True, nullable=True)
-    language_code = Column(String, nullable=True, default="uz")
+    language_code = Column(String, nullable=True)
 
-    state = Column(String, default="idle", index=True)
+    state = Column(String, default="language_select", index=True)
     state_data = Column(String, nullable=True) # json for complex data from states
 
     is_blocked = Column(Boolean, default=False)

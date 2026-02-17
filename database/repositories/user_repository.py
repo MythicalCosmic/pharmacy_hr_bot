@@ -23,7 +23,7 @@ class UserRepo:
             first_name: str,
             last_name: Optional[str] = None,
             username: Optional[str] = None,
-            language_code: str = "uz"
+            language_code: Optional[str] = None
     ) -> User:
         """Create new user - returns created user"""
         user = User(
@@ -44,7 +44,8 @@ class UserRepo:
             first_name: str,
             last_name: Optional[str] = None,
             username: Optional[str] = None,
-            language_code: str = "uz"
+            language_code: Optional[str] = None
+
     ) -> tuple[User, bool]:
         """Get existing user or create new one. Returns (user, created)"""
         user = await session.get(User, user_id)
