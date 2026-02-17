@@ -157,6 +157,7 @@ class DB:
         async def sync_telegram(user_id: int, first_name: str, last_name: str = None, username: str = None) -> bool:
             async with async_session() as s:
                 return await UserRepo.sync_telegram_data(s, user_id, first_name, last_name, username)
+            
 
         # ===== DELETE =====
         @staticmethod
@@ -275,6 +276,11 @@ class DB:
         async def set_photo(app_id: int, path: str) -> bool:
             async with async_session() as s:
                 return await ApplicationRepo.set_photo(s, app_id, path)
+            
+        @staticmethod
+        async def set_is_student(user_id: int, is_student: bool) -> bool:
+            async with async_session() as s:
+                return await ApplicationRepo.set_is_student(s, user_id, is_student)
 
         @staticmethod
         async def set_resume(app_id: int, path: str) -> bool:

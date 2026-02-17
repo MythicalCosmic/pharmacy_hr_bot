@@ -56,270 +56,141 @@ router = Router()
 
 # ==================== RUSSIAN LEVEL ====================
 
-@router.message(ApplicationState.russian_level, F.text)
-async def process_russian_level(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        data = await state.get_data()
+# @router.message(ApplicationState.russian_level, F.text)
+# async def process_russian_level(message: Message, state: FSMContext, user_lang: str = "uz"):
+#     try:
+#         lang = await get_lang(state, user_lang)
+#         data = await state.get_data()
         
-        if is_back(message.text):
-            if data.get("is_student"):
-                await message.answer(t(lang, "application.education_level.ask"), reply_markup=Keyboards.language_level(lang))
-                await state.set_state(ApplicationState.education_level)
-            else:
-                await message.answer(t(lang, "application.is_student.ask"), reply_markup=Keyboards.yes_no(lang))
-                await state.set_state(ApplicationState.is_student)
-            return
+#         if is_back(message.text):
+#             if data.get("is_student"):
+#                 await message.answer(t(lang, "application.education_level.ask"), reply_markup=Keyboards.language_level(lang))
+#                 await state.set_state(ApplicationState.education_level)
+#             else:
+#                 await message.answer(t(lang, "application.is_student.ask"), reply_markup=Keyboards.yes_no(lang))
+#                 await state.set_state(ApplicationState.is_student)
+#             return
         
-        level = get_level(message.text)
-        if not level:
-            await message.answer(t(lang, "application.russian_level.ask"), reply_markup=Keyboards.language_level(lang))
-            return
+#         level = get_level(message.text)
+#         if not level:
+#             await message.answer(t(lang, "application.russian_level.ask"), reply_markup=Keyboards.language_level(lang))
+#             return
         
-        app_id = await get_app_id(state)
-        from database.models.enums import LevelEnum
-        await DB.app.set_russian_level(app_id, LevelEnum(level))
-        await message.answer(t(lang, "application.russian_voice.ask"), reply_markup=Keyboards.back(lang))
-        await state.set_state(ApplicationState.russian_voice)
-    except Exception as e:
-        print(f"Error: {e}")
+#         app_id = await get_app_id(state)
+#         from database.models.enums import LevelEnum
+#         await DB.app.set_russian_level(app_id, LevelEnum(level))
+#         await message.answer(t(lang, "application.russian_voice.ask"), reply_markup=Keyboards.back(lang))
+#         await state.set_state(ApplicationState.russian_voice)
+#     except Exception as e:
+#         print(f"Error: {e}")
 
 
-# ==================== RUSSIAN VOICE ====================
+# # ==================== RUSSIAN VOICE ====================
 
-@router.message(ApplicationState.russian_voice, F.voice)
-async def process_russian_voice(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        app_id = await get_app_id(state)
+# @router.message(ApplicationState.russian_voice, F.voice)
+# async def process_russian_voice(message: Message, state: FSMContext, user_lang: str = "uz"):
+#     try:
+#         lang = await get_lang(state, user_lang)
+#         app_id = await get_app_id(state)
         
-        filepath = await FileService.download_voice(message.bot, message.voice, message.from_user.id, "russian")
-        if filepath:
-            await DB.app.set_russian_voice(app_id, filepath)
+#         filepath = await FileService.download_voice(message.bot, message.voice, message.from_user.id, "russian")
+#         if filepath:
+#             await DB.app.set_russian_voice(app_id, filepath)
         
-        await message.answer(t(lang, "application.english_level.ask"), reply_markup=Keyboards.language_level(lang))
-        await state.set_state(ApplicationState.english_level)
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-@router.message(ApplicationState.russian_voice, F.text)
-async def russian_voice_text(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        
-        if is_back(message.text):
-            await message.answer(t(lang, "application.russian_level.ask"), reply_markup=Keyboards.language_level(lang))
-            await state.set_state(ApplicationState.russian_level)
-            return
-        
-        await message.answer(t(lang, "application.russian_voice.invalid"), reply_markup=Keyboards.back(lang))
-    except Exception as e:
-        print(f"Error: {e}")
+#         await message.answer(t(lang, "application.english_level.ask"), reply_markup=Keyboards.language_level(lang))
+#         await state.set_state(ApplicationState.english_level)
+#     except Exception as e:
+#         print(f"Error: {e}")
 
 
-# ==================== ENGLISH LEVEL ====================
-
-@router.message(ApplicationState.english_level, F.text)
-async def process_english_level(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
+# @router.message(ApplicationState.russian_voice, F.text)
+# async def russian_voice_text(message: Message, state: FSMContext, user_lang: str = "uz"):
+#     try:
+#         lang = await get_lang(state, user_lang)
         
-        if is_back(message.text):
-            await message.answer(t(lang, "application.russian_voice.ask"), reply_markup=Keyboards.back(lang))
-            await state.set_state(ApplicationState.russian_voice)
-            return
+#         if is_back(message.text):
+#             await message.answer(t(lang, "application.russian_level.ask"), reply_markup=Keyboards.language_level(lang))
+#             await state.set_state(ApplicationState.russian_level)
+#             return
         
-        level = get_level(message.text)
-        if not level:
-            await message.answer(t(lang, "application.english_level.ask"), reply_markup=Keyboards.language_level(lang))
-            return
-        
-        app_id = await get_app_id(state)
-        from database.models.enums import LevelEnum
-        await DB.app.set_english_level(app_id, LevelEnum(level))
-        await message.answer(t(lang, "application.english_voice.ask"), reply_markup=Keyboards.back(lang))
-        await state.set_state(ApplicationState.english_voice)
-    except Exception as e:
-        print(f"Error: {e}")
+#         await message.answer(t(lang, "application.russian_voice.invalid"), reply_markup=Keyboards.back(lang))
+#     except Exception as e:
+#         print(f"Error: {e}")
 
 
-# ==================== ENGLISH VOICE ====================
+# # ==================== ENGLISH LEVEL ====================
 
-@router.message(ApplicationState.english_voice, F.voice)
-async def process_english_voice(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        app_id = await get_app_id(state)
+# @router.message(ApplicationState.english_level, F.text)
+# async def process_english_level(message: Message, state: FSMContext, user_lang: str = "uz"):
+#     try:
+#         lang = await get_lang(state, user_lang)
         
-        filepath = await FileService.download_voice(message.bot, message.voice, message.from_user.id, "english")
-        if filepath:
-            await DB.app.set_english_voice(app_id, filepath)
+#         if is_back(message.text):
+#             await message.answer(t(lang, "application.russian_voice.ask"), reply_markup=Keyboards.back(lang))
+#             await state.set_state(ApplicationState.russian_voice)
+#             return
         
-        await message.answer(t(lang, "application.has_experience.ask"), reply_markup=Keyboards.yes_no(lang))
-        await state.set_state(ApplicationState.has_experience)
-    except Exception as e:
-        print(f"Error: {e}")
+#         level = get_level(message.text)
+#         if not level:
+#             await message.answer(t(lang, "application.english_level.ask"), reply_markup=Keyboards.language_level(lang))
+#             return
+        
+#         app_id = await get_app_id(state)
+#         from database.models.enums import LevelEnum
+#         await DB.app.set_english_level(app_id, LevelEnum(level))
+#         await message.answer(t(lang, "application.english_voice.ask"), reply_markup=Keyboards.back(lang))
+#         await state.set_state(ApplicationState.english_voice)
+#     except Exception as e:
+#         print(f"Error: {e}")
 
 
-@router.message(ApplicationState.english_voice, F.text)
-async def english_voice_text(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
+# # ==================== ENGLISH VOICE ====================
+
+# @router.message(ApplicationState.english_voice, F.voice)
+# async def process_english_voice(message: Message, state: FSMContext, user_lang: str = "uz"):
+#     try:
+#         lang = await get_lang(state, user_lang)
+#         app_id = await get_app_id(state)
         
-        if is_back(message.text):
-            await message.answer(t(lang, "application.english_level.ask"), reply_markup=Keyboards.language_level(lang))
-            await state.set_state(ApplicationState.english_level)
-            return
+#         filepath = await FileService.download_voice(message.bot, message.voice, message.from_user.id, "english")
+#         if filepath:
+#             await DB.app.set_english_voice(app_id, filepath)
         
-        await message.answer(t(lang, "application.english_voice.invalid"), reply_markup=Keyboards.back(lang))
-    except Exception as e:
-        print(f"Error: {e}")
+#         await message.answer(t(lang, "application.has_experience.ask"), reply_markup=Keyboards.yes_no(lang))
+#         await state.set_state(ApplicationState.has_experience)
+#     except Exception as e:
+#         print(f"Error: {e}")
+
+
+# @router.message(ApplicationState.english_voice, F.text)
+# async def english_voice_text(message: Message, state: FSMContext, user_lang: str = "uz"):
+#     try:
+#         lang = await get_lang(state, user_lang)
+        
+#         if is_back(message.text):
+#             await message.answer(t(lang, "application.english_level.ask"), reply_markup=Keyboards.language_level(lang))
+#             await state.set_state(ApplicationState.english_level)
+#             return
+        
+#         await message.answer(t(lang, "application.english_voice.invalid"), reply_markup=Keyboards.back(lang))
+#     except Exception as e:
+#         print(f"Error: {e}")
 
 
 # ==================== HAS EXPERIENCE ====================
 
-@router.message(ApplicationState.has_experience, F.text)
-async def process_has_experience(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        
-        if is_back(message.text):
-            await message.answer(t(lang, "application.english_voice.ask"), reply_markup=Keyboards.back(lang))
-            await state.set_state(ApplicationState.english_voice)
-            return
-        
-        app_id = await get_app_id(state)
-        
-        if is_yes(message.text):
-            await DB.app.update(app_id, has_work_experience=True)
-            await state.update_data(has_experience=True)
-            await message.answer(t(lang, "application.experience_years.ask"), reply_markup=Keyboards.back(lang))
-            await state.set_state(ApplicationState.experience_years)
-        elif is_no(message.text):
-            await DB.app.update(app_id, has_work_experience=False)
-            await state.update_data(has_experience=False)
-            await message.answer(t(lang, "application.photo.ask"), reply_markup=Keyboards.back(lang))
-            await state.set_state(ApplicationState.photo)
-        else:
-            await message.answer(t(lang, "application.has_experience.ask"), reply_markup=Keyboards.yes_no(lang))
-    except Exception as e:
-        print(f"Error: {e}")
-
 
 # ==================== EXPERIENCE YEARS ====================
 
-@router.message(ApplicationState.experience_years, F.text)
-async def process_experience_years(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        
-        if is_back(message.text):
-            await message.answer(t(lang, "application.has_experience.ask"), reply_markup=Keyboards.yes_no(lang))
-            await state.set_state(ApplicationState.has_experience)
-            return
-        
-        is_valid, years = Validators.experience_years(message.text)
-        if not is_valid:
-            await message.answer(t(lang, "application.experience_years.invalid"), reply_markup=Keyboards.back(lang))
-            return
-        
-        app_id = await get_app_id(state)
-        await DB.app.update(app_id, work_experience_length=years)
-        await state.update_data(experience_years=years)
-        await message.answer(t(lang, "application.last_workplace.ask"), reply_markup=Keyboards.back(lang))
-        await state.set_state(ApplicationState.last_workplace)
-    except Exception as e:
-        print(f"Error: {e}")
 
 
 # ==================== LAST WORKPLACE ====================
 
-@router.message(ApplicationState.last_workplace, F.text)
-async def process_last_workplace(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        
-        if is_back(message.text):
-            await message.answer(t(lang, "application.experience_years.ask"), reply_markup=Keyboards.back(lang))
-            await state.set_state(ApplicationState.experience_years)
-            return
-        
-        is_valid, cleaned = Validators.text_field(message.text)
-        if not is_valid:
-            await message.answer(t(lang, "application.last_workplace.invalid"), reply_markup=Keyboards.back(lang))
-            return
-        
-        app_id = await get_app_id(state)
-        await DB.app.update(app_id, last_workplace=cleaned)
-        await message.answer(t(lang, "application.last_position.ask"), reply_markup=Keyboards.back(lang))
-        await state.set_state(ApplicationState.last_position)
-    except Exception as e:
-        print(f"Error: {e}")
-
 
 # ==================== LAST POSITION ====================
 
-@router.message(ApplicationState.last_position, F.text)
-async def process_last_position(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        
-        if is_back(message.text):
-            await message.answer(t(lang, "application.last_workplace.ask"), reply_markup=Keyboards.back(lang))
-            await state.set_state(ApplicationState.last_workplace)
-            return
-        
-        is_valid, cleaned = Validators.text_field(message.text, 2, 100)
-        if not is_valid:
-            await message.answer(t(lang, "application.last_position.invalid"), reply_markup=Keyboards.back(lang))
-            return
-        
-        app_id = await get_app_id(state)
-        await DB.app.update(app_id, last_position=cleaned)
-        await message.answer(t(lang, "application.photo.ask"), reply_markup=Keyboards.back(lang))
-        await state.set_state(ApplicationState.photo)
-    except Exception as e:
-        print(f"Error: {e}")
-
 
 # ==================== PHOTO ====================
-
-@router.message(ApplicationState.photo, F.photo)
-async def process_photo(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        app_id = await get_app_id(state)
-        
-        photo = message.photo[-1]  # Best quality
-        filepath = await FileService.download_photo(message.bot, photo, message.from_user.id)
-        if filepath:
-            await DB.app.set_photo(app_id, filepath)
-        
-        await message.answer(t(lang, "application.resume.ask"), reply_markup=Keyboards.skip_back(lang))
-        await state.set_state(ApplicationState.resume)
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-@router.message(ApplicationState.photo, F.text)
-async def photo_text(message: Message, state: FSMContext, user_lang: str = "uz"):
-    try:
-        lang = await get_lang(state, user_lang)
-        data = await state.get_data()
-        
-        if is_back(message.text):
-            if data.get("has_experience"):
-                await message.answer(t(lang, "application.last_position.ask"), reply_markup=Keyboards.back(lang))
-                await state.set_state(ApplicationState.last_position)
-            else:
-                await message.answer(t(lang, "application.has_experience.ask"), reply_markup=Keyboards.yes_no(lang))
-                await state.set_state(ApplicationState.has_experience)
-            return
-        
-        await message.answer(t(lang, "application.photo.invalid"), reply_markup=Keyboards.back(lang))
-    except Exception as e:
-        print(f"Error: {e}")
 
 
 # ==================== RESUME ====================

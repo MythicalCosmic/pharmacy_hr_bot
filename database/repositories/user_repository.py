@@ -62,6 +62,8 @@ class UserRepo:
         session.add(user)
         await session.commit()
         return user, True
+    
+        
 
     # ==================== READ ====================
 
