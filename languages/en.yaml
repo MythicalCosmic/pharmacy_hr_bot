@@ -20,16 +20,15 @@ buttons:
   refill: "🔄 Refill"
   male: "👨 Male"
   female: "👩 Female"
-  yes: "✅ Yes"
-  no: "❌ No"
+  "yes": "✅ Yes"
+  "no": "❌ No"
   send_phone: "📱 Send Phone Number"
-  beginner: "🟢 Beginner"
-  elementary: "🟡 Elementary"
-  intermediate: "🟠 Intermediate"
-  upper_intermediate: "🔵 Upper Intermediate"
-  advanced: "🟣 Advanced"
-  native: "⭐ Native"
-
+  secondary: "🎓 Secondary"  # uz / "🎓 Среднее" ru / "🎓 Secondary" en
+  specialized_secondary: "📚 Specialized Secondary"  # uz / "📚 Среднее специальное" ru / "📚 Specialized Secondary" en
+  incomplete_higher: "🎯 Incomplete Higher"  # uz / "🎯 Незаконченное высшее" ru / "🎯 Incomplete Higher" en
+  bachelor: "🎓 Bachelor's Degree"  # uz / "🎓 Высшее (Бакалавр)" ru / "🎓 Higher (Bachelor)" en
+  master: "👨‍🎓 Master's Degree"  # uz / "👨‍🎓 Магистратура" ru / "👨‍🎓 Master's" en
+  
 menu:
   main: |
     📋 Main Menu
@@ -137,7 +136,7 @@ application:
   
   experience_years:
     ask: "📆 How many years of experience? (enter a number):"
-    invalid: "❌ Please enter only a number (0-50):"
+    invalid: "❌ Please enter only a number (0-25):"
   
   last_workplace:
     ask: "🏢 Enter your last workplace name:"

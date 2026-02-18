@@ -4,29 +4,26 @@
 import yaml
 from pathlib import Path
 from typing import Dict, Any, Optional
-from functools import lru_cache
 
 
 class LanguageService:
     """Language service with caching"""
-    
     _instance: Optional["LanguageService"] = None
     _languages: Dict[str, Dict[str, Any]] = {}
     _loaded: bool = False
-    
+
     def __new__(cls) -> "LanguageService":
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance
-    
+
     def __init__(self):
         if not self._loaded:
             self._load_languages()
             LanguageService._loaded = True
-    
+
     def _load_languages(self) -> None:
         """Load all language files"""
-        # Try multiple possible locations
         possible_paths = [
             Path(__file__).parent.parent / "languages",
             Path(__file__).parent.parent.parent / "languages",
@@ -52,36 +49,31 @@ class LanguageService:
                 print(f"Loaded language: {lang_code}")
             except Exception as e:
                 print(f"Error loading {lang_file}: {e}")
-    
+
     def get(self, lang: str, key: str, **kwargs) -> str:
-        """Get translated text by key"""
-        # Default to Uzbek
         if lang not in self._languages:
             lang = "uz"
         
-        # Navigate nested dict
-        keys = key.split(".")
         value = self._languages.get(lang, {})
+        keys = key.split(".")
         
         for k in keys:
-            if isinstance(value, dict):
-                value = value.get(k, {})
-            else:
-                return key  # Return key if not found
+            if not isinstance(value, dict):
+                return key
+            if k not in value:
+                return key
+            value = value[k]
         
-        if isinstance(value, str):
-            if kwargs:
-                try:
-                    return value.format(**kwargs)
-                except KeyError:
-                    return value
-            return value
+        if not isinstance(value, str):
+            return key
         
-        return key  # Return key if not found
-    
-    def get_button(self, lang: str, button_key: str) -> str:
-        """Get button text"""
-        return self.get(lang, f"buttons.{button_key}")
+        if kwargs:
+            try:
+                return value.format(**kwargs)
+            except KeyError:
+                return value
+        
+        return value
 
 
 # Singleton instance
@@ -103,4 +95,19 @@ def t(lang: str, key: str, **kwargs) -> str:
 
 def btn(lang: str, key: str) -> str:
     """Quick button text function"""
-    return get_lang_service().get_button(lang, key)
+    return get_lang_service().get(lang, f"buttons.{key}")
+
+
+# Debug - remove this after testing
+print("=== RAW YAML DEBUG ===")
+ls = get_lang_service()
+for lang in ["uz", "ru", "en"]:
+        buttons = ls._languages[lang].get("buttons", {})
+        print(f"\n{lang} buttons keys: {list(buttons.keys())}")
+        print(f"  'yes' in buttons: {'yes' in buttons}")
+        print(f"  'no' in buttons: {'no' in buttons}")
+        print(f"  'back' in buttons: {'back' in buttons}")
+        if 'yes' in buttons:
+            print(f"  buttons['yes'] = {repr(buttons['yes'])}")
+        if 'no' in buttons:
+            print(f"  buttons['no'] = {repr(buttons['no'])}")

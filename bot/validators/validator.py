@@ -1,6 +1,8 @@
+# bot/validators/validator.py
 import re
 from datetime import date
 from typing import Tuple, Optional
+from services.language_service import btn
 
 class Validators:
     PHONE_PATTERN = re.compile(r"^\+?998[0-9]{9}$")
@@ -64,79 +66,91 @@ class Validators:
     def experience_years(text: str) -> Tuple[bool, int]:
         try:
             years = int(text.strip())
-            if 0 <= years <= 50:
+            if 0 <= years <= 25:
                 return True, years
             return False, 0
         except:
             return False, 0
 
 
-# Button text mappings - check ALL languages
-GENDER_MAP = {
-    "👨 Erkak": "male", "👩 Ayol": "female",
-    "👨 Мужской": "male", "👩 Женский": "female",
-    "👨 Male": "male", "👩 Female": "female",
-}
-
-YES_BUTTONS = ["✅ Ha", "✅ Да", "✅ Yes"]
-NO_BUTTONS = ["❌ Yo'q", "❌ Нет", "❌ No"]
-BACK_BUTTONS = ["⬅️ Orqaga", "⬅️ Назад", "⬅️ Back"]
-SKIP_BUTTONS = ["⏭ O'tkazib yuborish", "⏭ Пропустить", "Skip"]
-CONFIRM_BUTTONS = ["✅ Tasdiqlash", "✅ Подтвердить", "✅ Confirm"]
-REFILL_BUTTONS = ["🔄 Qayta to'ldirish", "🔄 Заполнить заново", "🔄 Refill"]
-CANCEL_BUTTONS = ["❌ Bekor qilish", "❌ Отменить", "❌ Cancel"]
-
-LEVEL_MAP = {
-    "🟢 Boshlang'ich": "beginner", "🟢 Начальный": "beginner", "🟢 Beginner": "beginner",
-    "🟡 Elementary": "elementary",
-    "🟠 O'rta": "intermediate", "🟠 Средний": "intermediate", "🟠 Intermediate": "intermediate",
-    "🔵 Yuqori o'rta": "upper_intermediate", "🔵 Выше среднего": "upper_intermediate", "🔵 Upper Intermediate": "upper_intermediate",
-    "🟣 Yuqori": "advanced", "🟣 Продвинутый": "advanced", "🟣 Advanced": "advanced",
-    "⭐ Ona tili": "native", "⭐ Родной": "native", "⭐ Native": "native",
-}
+# Dynamic button matchers - pulls directly from YAML
+def _get_buttons(key: str) -> list:
+    """Get button text for all languages from YAML"""
+    return [btn("uz", key), btn("ru", key), btn("en", key)]
 
 
 def is_back(text: str) -> bool:
-    return text in BACK_BUTTONS
+    return text in _get_buttons("back")
 
 
 def is_skip(text: str) -> bool:
-    return text in SKIP_BUTTONS
+    return text in _get_buttons("skip")
 
 
 def is_yes(text: str) -> bool:
-    return text in YES_BUTTONS
+    return text in _get_buttons("yes")
 
 
 def is_no(text: str) -> bool:
-    return text in NO_BUTTONS
+    return text in _get_buttons("no")
 
 
 def is_confirm(text: str) -> bool:
-    return text in CONFIRM_BUTTONS
+    return text in _get_buttons("confirm")
 
 
 def is_refill(text: str) -> bool:
-    return text in REFILL_BUTTONS
+    return text in _get_buttons("refill")
 
 
 def is_cancel(text: str) -> bool:
-    return text in CANCEL_BUTTONS
+    return text in _get_buttons("cancel")
 
 
 def get_gender(text: str) -> Optional[str]:
-    return GENDER_MAP.get(text)
+    gender_map = {
+        btn("uz", "male"): "male", btn("ru", "male"): "male", btn("en", "male"): "male",
+        btn("uz", "female"): "female", btn("ru", "female"): "female", btn("en", "female"): "female",
+    }
+    return gender_map.get(text)
 
 
 def get_level(text: str) -> Optional[str]:
-    return LEVEL_MAP.get(text)
+    """Get education level for Uzbekistan system"""
+    level_map = {
+        # O'rta (Secondary)
+        btn("uz", "secondary"): "secondary",
+        btn("ru", "secondary"): "secondary", 
+        btn("en", "secondary"): "secondary",
+        
+        # O'rta maxsus (Specialized secondary - college/vocational)
+        btn("uz", "specialized_secondary"): "specialized_secondary",
+        btn("ru", "specialized_secondary"): "specialized_secondary",
+        btn("en", "specialized_secondary"): "specialized_secondary",
+        
+        # Oliy to'liqsiz (Incomplete higher - bachelor in progress)
+        btn("uz", "incomplete_higher"): "incomplete_higher",
+        btn("ru", "incomplete_higher"): "incomplete_higher",
+        btn("en", "incomplete_higher"): "incomplete_higher",
+        
+        # Oliy (Higher - bachelor's degree)
+        btn("uz", "bachelor"): "bachelor",
+        btn("ru", "bachelor"): "bachelor",
+        btn("en", "bachelor"): "bachelor",
+        
+        # Magistratura (Master's)
+        btn("uz", "master"): "master",
+        btn("ru", "master"): "master",
+        btn("en", "master"): "master",
+    }
+    return level_map.get(text)
 
 
 def get_selected_lang(text: str) -> Optional[str]:
     """Get language code from button text"""
     lang_map = {
-        "🇺🇿 O'zbekcha": "uz",
-        "🇷🇺 Русский": "ru",
-        "🇬🇧 English": "en",
+        btn("uz", "uz"): "uz",
+        btn("ru", "ru"): "ru",
+        btn("en", "en"): "en",
     }
     return lang_map.get(text)

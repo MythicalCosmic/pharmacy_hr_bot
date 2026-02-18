@@ -1,18 +1,17 @@
 from pathlib import Path
 from aiogram import Router, F
-
 from aiogram.types import Message, FSInputFile
 from aiogram.fsm.context import FSMContext
 from bot.keyboards.reply import Keyboards
 from bot.states.user import ApplicationState, MenuState
 from services.language_service import t
 from database.db import DB
-from services.language_service import t
 from bot.validators.validator import is_back, is_skip, is_confirm, is_refill, is_cancel
 from utils.helpers import get_app_id, get_lang
-from utils.helpers import get_lang
+
 router = Router(name="confirmation_handlers")
 
+ADMIN_IDS = [6589960007]  
 
 
 @router.message(ApplicationState.additional_notes, F.text)
@@ -35,10 +34,8 @@ async def process_additional_notes(message: Message, state: FSMContext, user_lan
         print(f"Error: {e}")
 
 
-
 async def show_confirmation(message: Message, state: FSMContext, user_lang: str = "uz"):
     def _val(field):
-        """Safely get .value from an enum, or return the field as-is if it's already a string."""
         return field.value if hasattr(field, "value") else (field or "—")
 
     try:
@@ -51,7 +48,7 @@ async def show_confirmation(message: Message, state: FSMContext, user_lang: str 
             await message.answer(t(lang, "errors.general"))
             return
         
-        gender_text = {"male": "👨", "female": "👩"}.get(app.gender.value if app.gender else "", "—")
+        gender_text = {"male": "👨", "female": "👩"}.get(_val(app.gender), "—")
         
         text = t(lang, "application.confirmation.header")
         text += t(lang, "application.confirmation.personal",
@@ -68,7 +65,11 @@ async def show_confirmation(message: Message, state: FSMContext, user_lang: str 
         text += t(lang, "application.confirmation.education",
             is_student="✅" if app.is_student else "❌",
             education_place=app.education_place or "—",
-            education_level=_val(app.education_level) if app.education_level else "—"
+            education_level=_val(app.education_level)
+        )
+        text += t(lang, "application.confirmation.languages",
+            russian_level=_val(app.russian_level),
+            english_level=_val(app.english_level)
         )
         text += t(lang, "application.confirmation.experience",
             has_experience="✅" if app.has_work_experience else "❌",
@@ -96,6 +97,80 @@ async def show_confirmation(message: Message, state: FSMContext, user_lang: str 
         print(f"Error in show_confirmation: {e}")
 
 
+async def send_to_admins(message: Message, app):
+    def _val(field):
+        return field.value if hasattr(field, "value") else (field or "—")
+    
+    gender_text = {"male": "👨 Male", "female": "👩 Female"}.get(_val(app.gender), "—")
+    
+    caption = f"""
+🆕 NEW APPLICATION #{app.id}
+
+👤 Personal Information:
+- Name: {app.first_name} {app.last_name}
+- Birth Date: {app.birth_date.strftime("%d.%m.%Y") if app.birth_date else "—"}
+- Gender: {gender_text}
+
+📞 Contact:
+- Address: {app.address or "—"}
+- Phone: {app.phone_number or "—"}
+- Email: {app.email or "—"}
+
+🎓 Education:
+- Student: {"✅ Yes" if app.is_student else "❌ No"}
+- Institution: {app.education_place or "—"}
+- Level: {_val(app.education_level)}
+
+🌐 Languages:
+- Russian: {_val(app.russian_level)}
+- English: {_val(app.english_level)}
+
+💼 Work Experience:
+- Has Experience: {"✅ Yes" if app.has_work_experience else "❌ No"}
+- Years: {app.work_experience_lenght or "—"}
+- Last Workplace: {app.last_workplace or "—"}
+- Position: {app.last_position or "—"}
+
+📝 Additional:
+- How Found: {app.how_found_us or "—"}
+- Notes: {app.additional_notes or "—"}
+""".strip()
+    
+    user_info = f"""
+━━━━━━━━━━━━━━━━━━━━━
+👤 TELEGRAM INFO:
+- User ID: {message.from_user.id}
+- Username: @{message.from_user.username or "—"}
+- First Name: {message.from_user.first_name or "—"}
+- Last Name: {message.from_user.last_name or "—"}
+- Language: {message.from_user.language_code or "—"}
+""".strip()
+    
+    for admin_id in ADMIN_IDS:
+        try:
+            if app.photo_path and Path(app.photo_path).exists():
+                await message.bot.send_photo(
+                    chat_id=admin_id,
+                    photo=FSInputFile(app.photo_path),
+                    caption=caption
+                )
+            else:
+                await message.bot.send_message(admin_id, caption)
+            
+            await message.bot.send_message(admin_id, user_info)
+            
+            if app.resume_path and Path(app.resume_path).exists():
+                await message.bot.send_document(
+                    chat_id=admin_id,
+                    document=FSInputFile(app.resume_path),
+                    caption="📄 Resume"
+                )
+            
+            
+        except Exception as e:
+            print(f"Failed to send to admin {admin_id}: {e}")
+
+
 @router.message(ApplicationState.confirmation, F.text)
 async def process_confirmation(message: Message, state: FSMContext, user_lang: str = "uz"):
     try:
@@ -103,7 +178,11 @@ async def process_confirmation(message: Message, state: FSMContext, user_lang: s
         app_id = await get_app_id(state)
         
         if is_confirm(message.text):
+            app = await DB.app.get(app_id)
             await DB.app.submit(app_id)
+            
+            await send_to_admins(message, app)
+            
             await state.clear()
             await state.update_data(lang=lang)
             await message.answer(t(lang, "application.success"), reply_markup=Keyboards.main_menu(lang))

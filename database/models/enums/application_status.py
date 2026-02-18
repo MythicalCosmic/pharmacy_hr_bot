@@ -17,10 +17,8 @@ class ApplicationStatusEnum(enum.Enum):
     withdrawn = "withdrawn"
 
 class LevelEnum(str, enum.Enum):
-    none = "none"
-    beginner = "beginner"
-    elementary = "elementary"
-    intermediate = "intermediate"
-    upper_intermediate = "upper_intermediate"
-    advanced = "advanced"
-    native = "native"
+    secondary = "secondary"
+    specialized_secondary = "specialized_secondary"
+    incomplete_higher = "incomplete_higher"
+    bachelor = "bachelor"
+    master = "master"

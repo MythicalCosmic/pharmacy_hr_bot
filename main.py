@@ -13,6 +13,8 @@ from database.database import init_db
 from bot.handlers import register_handlers
 from bot.middlewares.auth import AuthMiddleware
 from bot.middlewares.throttling import ThrottlingMiddleware
+from bot.middlewares.anti_spam import AntiSpamMiddleware
+from bot.middlewares.private_chat_only import PrivateChatOnlyMiddleware
 
 load_dotenv()
 setup_logging()
@@ -29,8 +31,9 @@ async def main():
         per=1,
         warning_message="⏳ Iltimos, sekinroq yozing!"
     ))
+    dp.message.middleware(PrivateChatOnlyMiddleware())
     dp.message.middleware(AuthMiddleware())
-    
+    dp.message.middleware(AntiSpamMiddleware())
     await init_db()
     logger.info("Database initialized")
     

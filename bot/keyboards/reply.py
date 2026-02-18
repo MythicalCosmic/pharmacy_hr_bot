@@ -96,19 +96,21 @@ class Keyboards:
         """Language proficiency levels"""
         builder = ReplyKeyboardBuilder()
         builder.row(
-            KeyboardButton(text=btn(lang, "beginner")),
-            KeyboardButton(text=btn(lang, "elementary"))
+            KeyboardButton(text=btn(lang, "secondary")),
+            KeyboardButton(text=btn(lang, "specialized_secondary"))
         )
         builder.row(
-            KeyboardButton(text=btn(lang, "intermediate")),
-            KeyboardButton(text=btn(lang, "upper_intermediate"))
+            KeyboardButton(text=btn(lang, "incomplete_higher")),
+            KeyboardButton(text=btn(lang, "bachelor"))
         )
         builder.row(
-            KeyboardButton(text=btn(lang, "advanced")),
-            KeyboardButton(text=btn(lang, "native"))
+            KeyboardButton(text=btn(lang, "master"))
         )
-        builder.row(KeyboardButton(text=btn(lang, "back")))
+        builder.row(
+            KeyboardButton(text=btn(lang, "back"))
+        )
         return builder.as_markup(resize_keyboard=True)
+
     
     @staticmethod
     def confirmation(lang: str) -> ReplyKeyboardMarkup:

@@ -20,15 +20,15 @@ buttons:
   refill: "🔄 Qayta to'ldirish"
   male: "👨 Erkak"
   female: "👩 Ayol"
-  yes: "✅ Ha"
-  no: "❌ Yo'q"
+  "yes": "✅ Ha"
+  "no": "❌ Yo'q"
   send_phone: "📱 Telefon raqamni yuborish"
-  beginner: "🟢 Boshlang'ich"
-  elementary: "🟡 Elementary"
-  intermediate: "🟠 O'rta"
-  upper_intermediate: "🔵 Yuqori o'rta"
-  advanced: "🟣 Yuqori"
-  native: "⭐ Ona tili"
+  secondary: "🎓 O'rta"  # uz / "🎓 Среднее" ru / "🎓 Secondary" en
+  specialized_secondary: "📚 O'rta maxsus"  # uz / "📚 Среднее специальное" ru / "📚 Specialized Secondary" en
+  incomplete_higher: "🎯 Oliy to'liqsiz"  # uz / "🎯 Незаконченное высшее" ru / "🎯 Incomplete Higher" en
+  bachelor: "🎓 Oliy (Bakalavr)"  # uz / "🎓 Высшее (Бакалавр)" ru / "🎓 Higher (Bachelor)" en
+  master: "👨‍🎓 Magistratura"  # uz / "👨‍🎓 Магистратура" ru / "👨‍🎓 Master's" en
+
 
 menu:
   main: |
@@ -137,7 +137,7 @@ application:
   
   experience_years:
     ask: "📆 Necha yillik ish tajribangiz bor? (raqam kiriting):"
-    invalid: "❌ Iltimos, faqat raqam kiriting (0-50):"
+    invalid: "❌ Iltimos, faqat raqam kiriting (0-25):"
   
   last_workplace:
     ask: "🏢 Oxirgi ish joyingiz nomini kiriting:"
