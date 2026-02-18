@@ -96,18 +96,3 @@ def t(lang: str, key: str, **kwargs) -> str:
 def btn(lang: str, key: str) -> str:
     """Quick button text function"""
     return get_lang_service().get(lang, f"buttons.{key}")
-
-
-# Debug - remove this after testing
-print("=== RAW YAML DEBUG ===")
-ls = get_lang_service()
-for lang in ["uz", "ru", "en"]:
-        buttons = ls._languages[lang].get("buttons", {})
-        print(f"\n{lang} buttons keys: {list(buttons.keys())}")
-        print(f"  'yes' in buttons: {'yes' in buttons}")
-        print(f"  'no' in buttons: {'no' in buttons}")
-        print(f"  'back' in buttons: {'back' in buttons}")
-        if 'yes' in buttons:
-            print(f"  buttons['yes'] = {repr(buttons['yes'])}")
-        if 'no' in buttons:
-            print(f"  buttons['no'] = {repr(buttons['no'])}")

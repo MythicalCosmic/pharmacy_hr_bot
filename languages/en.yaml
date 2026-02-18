@@ -229,6 +229,22 @@ application:
     
     Press "Start Application" to submit again.
 
+help:
+  text: |
+    ℹ️ Help
+    
+    Using this bot you can submit a job application.
+    
+    📝 Commands:
+    /start - Restart the bot
+    /help - Help
+    
+    If you have questions or issues, contact the admin.
+  developer: |
+    
+    🤖 Bot developer: @mythical_cosmic
+    💼 Telegram bots and applications development services
+    
 errors:
   general: "❌ An error occurred. Please try again."
   throttled: "⏳ Please slow down!"

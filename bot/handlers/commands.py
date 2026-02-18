@@ -1,5 +1,5 @@
 from aiogram import Router
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from bot.keyboards.inline import get_main_keyboard
 from services.language_service import t
@@ -37,4 +37,22 @@ async def cmd_start(message: Message, state: FSMContext, db_user=None, is_new_us
             await state.set_state(MenuState.main)
     except Exception as e:
         print(f"Error in cmd_start: {e}")
+        await message.answer(t("uz", "errors.general"))
+
+
+@router.message(Command("help"))
+async def cmd_help(message: Message, state: FSMContext, db_user=None, user_lang: str = "uz"):
+    try:
+        lang = user_lang
+        if db_user and db_user.language_code:
+            lang = db_user.language_code
+        
+        help_text = t(lang, "help.text")
+        await message.answer(help_text, reply_markup=Keyboards.main_menu(lang))
+        
+        dev_text = t(lang, "help.developer")
+        await message.answer(dev_text)
+        
+    except Exception as e:
+        print(f"Error in cmd_help: {e}")
         await message.answer(t("uz", "errors.general"))

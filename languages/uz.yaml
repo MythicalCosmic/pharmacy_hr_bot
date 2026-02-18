@@ -229,7 +229,22 @@ application:
     ❌ Ariza bekor qilindi.
     
     Qayta topshirish uchun "Ariza topshirish" tugmasini bosing.
-
+help:
+  text: |
+    ℹ️ Yordam
+    
+    Bu bot orqali siz ish uchun ariza topshirishingiz mumkin.
+    
+    📝 Komandalar:
+    /start - Botni qayta ishga tushirish
+    /help - Yordam
+    
+    Savol yoki muammo bo'lsa, admin bilan bog'laning.
+  developer: |
+    
+    🤖 Developer: @mythical_cosmic
+    💼 Telegram botlar va dasturlar ishlab chiqish xizmatlari!
+    
 errors:
   general: "❌ Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring."
   throttled: "⏳ Iltimos, sekinroq yozing!"
