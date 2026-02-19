@@ -106,34 +106,30 @@ async def send_to_admins(message: Message, app):
     caption = f"""
 🆕 NEW APPLICATION #{app.id}
 
-👤 Personal Information:
-- Name: {app.first_name} {app.last_name}
-- Birth Date: {app.birth_date.strftime("%d.%m.%Y") if app.birth_date else "—"}
+👤 Shaxsiy malumot:
+- To'liq ismi: {app.first_name} {app.last_name}
+- Tug'ilgan kuni: {app.birth_date.strftime("%d.%m.%Y") if app.birth_date else "—"}
 - Gender: {gender_text}
 
-📞 Contact:
+📞 Bog'lanish:
 - Address: {app.address or "—"}
-- Phone: {app.phone_number or "—"}
+- Telefon: {app.phone_number or "—"}
 - Email: {app.email or "—"}
 
-🎓 Education:
+🎓 O'qishi:
 - Student: {"✅ Yes" if app.is_student else "❌ No"}
-- Institution: {app.education_place or "—"}
-- Level: {_val(app.education_level)}
+- Insitut: {app.education_place or "—"}
+- Daraja: {_val(app.education_level)}
 
-🌐 Languages:
-- Russian: {_val(app.russian_level)}
-- English: {_val(app.english_level)}
+💼 Ish Tarixi:
+- Oldin ishlaganmi: {"✅ Yes" if app.has_work_experience else "❌ No"}
+- Qancha ishlagan yili: {app.work_experience_lenght or "—"}
+- Ohirgi ish joyi: {app.last_workplace or "—"}
+- Pozitsiyasi: {app.last_position or "—"}
 
-💼 Work Experience:
-- Has Experience: {"✅ Yes" if app.has_work_experience else "❌ No"}
-- Years: {app.work_experience_lenght or "—"}
-- Last Workplace: {app.last_workplace or "—"}
-- Position: {app.last_position or "—"}
-
-📝 Additional:
-- How Found: {app.how_found_us or "—"}
-- Notes: {app.additional_notes or "—"}
+📝 Qo'shhimcha malumotlar:
+- Qanday topgan: {app.how_found_us or "—"}
+- Notelar: {app.additional_notes or "—"}
 """.strip()
     
     user_info = f"""
