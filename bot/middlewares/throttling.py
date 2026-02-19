@@ -56,11 +56,9 @@ class ThrottlingMiddleware(BaseMiddleware):
         now = time.time()
         timestamps = self._user_calls[user_id]
 
-        # Remove timestamps outside the window
         window_start = now - self.per
         timestamps[:] = [ts for ts in timestamps if ts > window_start]
 
-        # Check limit
         if len(timestamps) < self.calls:
             timestamps.append(now)
             return True
@@ -94,33 +92,3 @@ class ThrottlingMiddleware(BaseMiddleware):
 
         return await handler(event, data)
 
-
-# ============================================================
-# USAGE
-# ============================================================
-"""
-from aiogram import Dispatcher
-from middlewares.throttling import ThrottlingMiddleware
-
-dp = Dispatcher()
-
-# Basic: 1 message per 0.5 seconds
-dp.message.middleware(ThrottlingMiddleware(calls=1, per=0.5))
-
-# With warning (Uzbek)
-dp.message.middleware(ThrottlingMiddleware(
-    calls=1,
-    per=1,
-    warning_message="⏳ Iltimos, sekinroq yozing!"
-))
-
-# For callbacks: 3 clicks per 2 seconds
-dp.callback_query.middleware(ThrottlingMiddleware(
-    calls=3,
-    per=2,
-    warning_message="⏳ Juda tez bosdingiz!"
-))
-
-# Silent (just ignore spam)
-dp.message.middleware(ThrottlingMiddleware(calls=1, per=0.5, silent=True))
-"""
