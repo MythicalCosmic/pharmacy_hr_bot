@@ -72,9 +72,6 @@ app = FastAPI(lifespan=lifespan)
 def create_app() -> FastAPI:
     @app.post(WEBHOOK_PATH)
     async def webhook(request: Request) -> Response:
-        secret = request.headers.get("X-Telegram-Bot-Api-Secret-Token")
-        if secret != WEBHOOK_SECRET:
-            return Response(status_code=403)
         update = await request.json()
         await dp.feed_raw_update(bot, update)
         return Response()
