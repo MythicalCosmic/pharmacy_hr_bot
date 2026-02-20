@@ -87,6 +87,10 @@ def create_app() -> FastAPI:
 async def health_check():
     return {"status": "healthy", "status_code": status.HTTP_200_OK}
 
+@app.get("/")
+async def health() -> Response:
+    return Response(status_code=200)
+
 
 if __name__ == "__main__":
     import sys
