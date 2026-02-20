@@ -11,7 +11,7 @@ from utils.helpers import get_app_id, get_lang
 
 router = Router(name="confirmation_handlers")
 
-ADMIN_IDS = [6589960007]  
+ADMIN_IDS = [6589960007, 115488844]  
 
 
 @router.message(ApplicationState.additional_notes, F.text)
